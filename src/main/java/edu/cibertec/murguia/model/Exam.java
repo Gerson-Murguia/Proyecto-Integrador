@@ -19,7 +19,7 @@ public class Exam {
     /**El examen solo puede ser de una carrera
     one to one*/
     @OneToOne
-    private Career carrera;
+    private Carrera carrera;
     /**El examen solo puede tener una modalidad
     one to one
     El examen podria tener muchas modalidades?, se descarta para dar simplicidad.*/
