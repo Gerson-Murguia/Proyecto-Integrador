@@ -22,9 +22,17 @@ public class Postulant {
     private String name;
     private String lastName;
     private String email;
-    private String address;
+    private String phone;
     private String imageUrl;
     //muchos estudiantes pueden tener el mismo examen
     @ManyToOne(fetch = FetchType.LAZY)
     private Exam exam;
+    
+    public Postulant(String name, String lastName, String email, String phone, String imageUrl) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.imageUrl = imageUrl;
+    }
 }
