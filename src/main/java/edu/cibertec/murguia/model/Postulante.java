@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name="postulante")
-public class Postulant {
+public class Postulante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Postulant {
     @ManyToOne(fetch = FetchType.LAZY)
     private Exam exam;
     
-    public Postulant(String name, String lastName, String email, String phone, String imageUrl) {
+    public Postulante(String name, String lastName, String email, String phone, String imageUrl) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;

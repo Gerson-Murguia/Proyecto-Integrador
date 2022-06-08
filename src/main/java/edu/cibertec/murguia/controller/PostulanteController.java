@@ -1,22 +1,19 @@
 package edu.cibertec.murguia.controller;
 
-import edu.cibertec.murguia.model.Postulant;
+import edu.cibertec.murguia.model.Postulante;
 import edu.cibertec.murguia.service.PostulanteService;
 import lombok.RequiredArgsConstructor;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,9 +28,9 @@ public class PostulanteController {
 	 * @return List<Postulante>
 	 */
 	@GetMapping("/listado")
-	public ResponseEntity<List<Postulant>> ListarPostulante(){
+	public ResponseEntity<List<Postulante>> ListarPostulante(){
 
-		List<Postulant> postulante = postulanteService.getPostulants();
+		List<Postulante> postulante = postulanteService.getPostulants();
 		if (!postulante.isEmpty()) {
 			return new ResponseEntity<>(postulante, HttpStatus.OK);
 		} else {
@@ -47,24 +44,24 @@ public class PostulanteController {
 	 * @return Postulante obtenido
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<Postulant> getPostulante(@PathVariable Long id){
-		Postulant postulante = postulanteService.getPostulante(id);
+	public ResponseEntity<Postulante> getPostulante(@PathVariable Long id){
+		Postulante postulante = postulanteService.getPostulante(id);
 		return new ResponseEntity<>(postulante, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/registrar")
-	public ResponseEntity<Postulant> guardarPostulante(@RequestParam("name") String name, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("address") String address, @RequestParam MultipartFile image){
+	public ResponseEntity<Postulante> guardarPostulante(@RequestParam("name") String name, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("address") String address, @RequestParam MultipartFile image){
 		
-		Postulant nuevoPostulante=postulanteService.addNuevoPostulante(name, lastName, email, address, null);
+		Postulante nuevoPostulante=postulanteService.addNuevoPostulante(name, lastName, email, address, null);
 		postulanteService.guardarimg(nuevoPostulante, image);
 		
 		return new ResponseEntity<>(nuevoPostulante,HttpStatus.CREATED);
 	}
 
 	@PostMapping("/editar/{id}")
-	public ResponseEntity<Postulant> editarPostulante (@PathVariable long id ,@RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String address, @RequestParam MultipartFile image){
+	public ResponseEntity<Postulante> editarPostulante (@PathVariable long id , @RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String address, @RequestParam MultipartFile image){
 		
-		Postulant editarPostulante=postulanteService.updatePostulante(id,name, lastName, email, address, null);
+		Postulante editarPostulante=postulanteService.updatePostulante(id,name, lastName, email, address, null);
 		postulanteService.guardarimg(editarPostulante, image);
 		return new ResponseEntity<>(editarPostulante,HttpStatus.OK);
 	}

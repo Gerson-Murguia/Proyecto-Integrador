@@ -1,13 +1,13 @@
 package edu.cibertec.murguia.repo;
 
-import edu.cibertec.murguia.model.Postulant;
+import edu.cibertec.murguia.model.Postulante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Postulant, Long> {
+public interface StudentRepository extends JpaRepository<Postulante, Long> {
 
-    Postulant findStudentByEmail(String email);
-    Postulant findStudentByLastName(String lastName);
+    Postulante findStudentByEmail(String email);
+    Postulante findStudentByLastName(String lastName);
 }
 
