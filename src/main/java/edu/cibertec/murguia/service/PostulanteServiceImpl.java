@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+import static edu.cibertec.murguia.constant.ImageConstant.IMAGE_BASE_URL;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -58,32 +60,27 @@ public class PostulanteServiceImpl implements PostulanteService {
         studentRepo.deleteById(id);
     }
 
-	@Override
-	public void guardarimg(Postulante postulante, MultipartFile imgpostulante) {
-		
-		if (!Arrays.asList(IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE,IMAGE_GIF_VALUE).contains(imgpostulante.getContentType())){
-			log.info(imgpostulante.getOriginalFilename()+"no es una imagen. Por favor, suba una imagen");
+    @Override
+    public void guardarimg(Postulante postulante, MultipartFile imgpostulante) {
+        if (!Arrays.asList(IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE,IMAGE_GIF_VALUE).contains(imgpostulante.getContentType())){
+            log.info(imgpostulante.getOriginalFilename()+"no es una imagen con formato aceptado. Por favor, suba una imagen");
         }
-		
-		if(!imgpostulante.isEmpty()) {
-			try {
-				Path path = Paths.get(System.getProperty("user.dir")+"/src/main/resources/static/images/").toAbsolutePath().normalize();
-				/*if(!Files.exists(path)) {
-					 Files.createDirectories(path);
-					 log.info("Directorio creado:"+path.toString());
-				}*/
-				Files.deleteIfExists(Paths.get(path+".jpg"));
-				Files.copy(imgpostulante.getInputStream(),path.resolve(postulante.getId()+".jpg"),REPLACE_EXISTING);
-				//Files.write(path, bytes);
-				postulante.setImageUrl(path.toString()+"\\"+postulante.getId()+".jpg");
-				studentRepo.save(postulante);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-   
-	
-
+        if(!imgpostulante.isEmpty()) {
+            try {
+                Path path = Paths.get(System.getProperty("user.dir")+"/src/main/resources/static/images/").toAbsolutePath().normalize();
+                Files.deleteIfExists(Paths.get(path+".jpg"));
+                //TODO: Cambiar la extension de la imagen dinamicamente
+                Files.copy(imgpostulante.getInputStream(),path.resolve(postulante.getId()+".jpg"),REPLACE_EXISTING);
+                //Files.write(path, bytes);
+                postulante.setImageUrl(IMAGE_BASE_URL+postulante.getId());
+                studentRepo.save(postulante);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Override
+    public byte[] getProfileImage(Long id) throws IOException {
+        return Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/src/main/resources/static/images/"+id+".jpg"));
+    }
 }

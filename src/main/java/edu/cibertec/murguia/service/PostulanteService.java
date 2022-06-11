@@ -3,6 +3,7 @@ package edu.cibertec.murguia.service;
 import edu.cibertec.murguia.model.Postulante;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PostulanteService {
@@ -13,4 +14,5 @@ public interface PostulanteService {
     Postulante addNuevoPostulante(String name, String lastName, String email, String phone, String imageUrl);
     void guardarimg(Postulante postulante, MultipartFile imgpostulante);
     void eliminarPostulante(long id);
+    byte[] getProfileImage(Long id) throws IOException;
 }
