@@ -15,6 +15,8 @@
     <description>proyectoIntegrador</description>
     <properties>
         <java.version>15</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <dependencies>
         <dependency>
@@ -56,7 +58,7 @@
             <artifactId>example-app</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/java/edu/cibertec/murguia/lib/ms-azure-cs-faceapi.jar</systemPath>
+            <systemPath>${pom.basedir}/src/main/java/edu/cibertec/murguia/lib/ms-azure-cs-faceapi.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
@@ -157,6 +159,11 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
             </plugin>
         </plugins>
     </build>
