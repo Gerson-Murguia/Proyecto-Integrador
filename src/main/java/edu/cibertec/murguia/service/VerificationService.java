@@ -36,7 +36,6 @@ public class VerificationService {
     }
 
     public VerificacionDTO verify(Long id,MultipartFile image) throws IOException {
-        //TODO: Obtener imagen de la base de datos mediante el id de usuario
         byte[] sourceImage=postulanteService.getProfileImage(id);
 
         List<byte[]> targetImage=new ArrayList<>();

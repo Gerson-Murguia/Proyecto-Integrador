@@ -46,7 +46,6 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public void eliminarArea(Long id) {
         areaRepo.deleteById(id);
-        //TODO: Devolver un Area?
     }
 
     @Override

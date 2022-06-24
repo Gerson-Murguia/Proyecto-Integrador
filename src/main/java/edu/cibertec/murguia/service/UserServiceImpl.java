@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,7 +124,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void deleteUser(String username) throws IOException {
+    public void deleteUser(String username) {
         AppUser user = userRepo.findByUsername(username);
         //Implementar borrar carpeta de imagen de perfil si es que se llega a agregar la funcionalidad
         userRepo.delete(user);

@@ -32,5 +32,4 @@ public class AppUser implements Serializable {
     private String[] authorities;//read,edit,delete,create
     private boolean isActive;
     private boolean isNotLocked;
-    //TODO: agregar campos para imagen de perfil y fechas de logueo si alcanza el tiempo.
 }

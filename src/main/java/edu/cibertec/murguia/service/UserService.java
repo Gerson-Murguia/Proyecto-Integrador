@@ -12,7 +12,7 @@ public interface UserService {
     // Por si se necesita agregar un usuario desde dentro de la app
     // AppUser addNewUser(String firstName, String lastName, String username, String email, String role, boolean isNonLocked, boolean isActive, MultipartFile profileImage);
     AppUser updateUser(String currentUsername,String nuevoFirstName, String nuevoLastName, String nuevoUsername, String nuevoEmail);
-    void deleteUser(String username) throws IOException;
+    void deleteUser(String username);
 
     //BUSQUEDA
     AppUser findUserByUsername(String username);

@@ -24,5 +24,4 @@ public class Modalidad {
         this.descripcion =  descripcion;
         this.estado = estado;
     }
-    //la relacion con ficha de postulacion se mapea en la clase FichaPostulacion
 }

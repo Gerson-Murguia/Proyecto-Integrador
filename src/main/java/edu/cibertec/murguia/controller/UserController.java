@@ -9,6 +9,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/usuario")
@@ -35,5 +38,24 @@ public class UserController {
    private void authenticate(String username, String password) {
       System.out.println("Ingreso a authenticate");
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+   }
+
+   //user crud operations
+   @GetMapping("/{username}")
+   public ResponseEntity<AppUser> getUser(@PathVariable String username) {
+      AppUser user = userService.findUserByUsername(username);
+      return new ResponseEntity<>(user, HttpStatus.OK);
+   }
+
+   @GetMapping("/")
+   public ResponseEntity<List<AppUser>> getUsers() {
+      List<AppUser> users = userService.getUsers();
+      return new ResponseEntity<>(users, HttpStatus.OK);
+   }
+
+   @DeleteMapping("/{username}")
+   public ResponseEntity<Void> deleteUser(@PathVariable String username) throws IOException {
+      userService.deleteUser(username);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }
 }

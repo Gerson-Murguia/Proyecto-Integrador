@@ -22,5 +22,4 @@ public class Admision {
         this.descripcion = descripcion;
         this.estado = estado;
     }
-    //La relacion con ficha postulacion se hace en la clase FichaPostulacion
 }

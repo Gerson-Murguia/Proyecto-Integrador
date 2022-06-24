@@ -17,6 +17,10 @@ import java.util.Optional;
 public class AreaController {
     private final AreaService areaService;
 
+    /**
+     * Obtiene todas las areas
+     * @return List<Area>
+     */
     @GetMapping("/listado")
     public ResponseEntity<List<Area>> getAreas() {
         List<Area> areas = areaService.getAreas();
@@ -25,7 +29,11 @@ public class AreaController {
         }
         return ResponseEntity.ok(areaService.getAreas());
     }
-
+    /**
+     * Obtiene una area
+     * @param id id de la area
+     * @return Area obtenida
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Area>> getAreaById(@PathVariable Long id) {
         Optional<Area> area = areaService.getArea(id);
@@ -34,13 +42,22 @@ public class AreaController {
         }
         return ResponseEntity.ok(area);
     }
-
+    /**
+     * Crea una area
+     * @param area area a crear
+     * @return Area creada
+     */
     @PostMapping("/registrar")
     public ResponseEntity<Area> registrarArea(@RequestBody Area area) {
         Area areaRegistrada = areaService.registrarArea(area.getDescripcion(), area.getEstado());
         return new ResponseEntity<>(areaRegistrada, HttpStatus.CREATED);
     }
-
+    /**
+     * Actualiza una area
+     * @param id id de la area
+     * @param area area a actualizar
+     * @return Area actualizada
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Area> actualizarArea(@RequestBody Area area, @PathVariable Long id) {
         Area areaActualizada = areaService.actualizarArea(id,area.getDescripcion(), area.getEstado());
@@ -49,13 +66,21 @@ public class AreaController {
         }
         return ResponseEntity.ok(areaActualizada);
     }
-
+    /**
+     * Elimina una area
+     * @param id id de la area
+     * @return Area eliminada
+     */
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Area> eliminarArea(@PathVariable Long id) {
         areaService.eliminarArea(id);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Elimina TODAS las areas
+     * @return Area eliminada
+     */
     @DeleteMapping("/eliminar")
     public ResponseEntity<Area> eliminarTodasAreas() {
         areaService.eliminarTodasAreas();
