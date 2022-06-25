@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static edu.cibertec.murguia.constant.ImageConstant.IMAGE_BASE_URL;
+import static edu.cibertec.murguia.constant.ImageConstant.USER_FOLDER;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -61,26 +63,35 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     @Override
-    public void guardarimg(Postulante postulante, MultipartFile imgpostulante) {
-        if (!Arrays.asList(IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE,IMAGE_GIF_VALUE).contains(imgpostulante.getContentType())){
-            log.info(imgpostulante.getOriginalFilename()+"no es una imagen con formato aceptado. Por favor, suba una imagen");
-        }
+    public void guardarimg(Postulante postulante, MultipartFile imgpostulante) throws IOException {
+        System.out.println("imgpostulante: " + imgpostulante.getOriginalFilename());
+        System.out.println("User folder: " + System.getProperty("user.home"));
         if(!imgpostulante.isEmpty()) {
-            try {
-                Path path = Paths.get(System.getProperty("user.dir")+"/src/main/resources/static/images/").toAbsolutePath().normalize();
-                Files.deleteIfExists(Paths.get(path+".jpg"));
-                //TODO: Cambiar la extension de la imagen dinamicamente
-                Files.copy(imgpostulante.getInputStream(),path.resolve(postulante.getId()+".jpg"),REPLACE_EXISTING);
-                //Files.write(path, bytes);
-                postulante.setImageUrl(IMAGE_BASE_URL+postulante.getId());
-                studentRepo.save(postulante);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!Arrays.asList(IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE,IMAGE_GIF_VALUE).contains(imgpostulante.getContentType())){
+                log.info(imgpostulante.getOriginalFilename()+"no es una imagen con formato aceptado. Por favor, suba una imagen");
             }
+            Path userFolder = Paths.get(USER_FOLDER+postulante.getId()).toAbsolutePath().normalize();
+            if (!Files.exists(userFolder)){
+                Files.createDirectories(userFolder);
+                log.info("Directorio creado:"+userFolder);
+            }
+
+            Files.deleteIfExists(Paths.get(userFolder+"/verificacion/postulante/"+postulante.getId()+".jpg"));
+            Files.copy(imgpostulante.getInputStream(),userFolder.resolve(postulante.getId()+".jpg"),REPLACE_EXISTING);
+            postulante.setImageUrl(setProfileImageUrl(postulante.getId()));
+            studentRepo.save(postulante);
         }
     }
+
+    private String setProfileImageUrl(Long id) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(IMAGE_BASE_URL+id+".jpg")
+                .toUriString();
+    }
+
     @Override
     public byte[] getProfileImage(Long id) throws IOException {
-        return Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/src/main/resources/static/images/"+id+".jpg"));
+        System.out.println("Get profile image: "+Paths.get(Paths.get(System.getProperty("user.home")).toAbsolutePath().normalize()+"/"+id+".jpg"));
+        return Files.readAllBytes(Paths.get(USER_FOLDER+id+".jpg"));
     }
 }

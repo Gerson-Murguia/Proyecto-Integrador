@@ -12,7 +12,7 @@ public interface PostulanteService {
     Postulante getPostulante(Long id);
     Postulante updatePostulante(long id, String name, String lastName, String email, String phone, String imageUrl);
     Postulante addNuevoPostulante(String name, String lastName, String email, String phone, String imageUrl);
-    void guardarimg(Postulante postulante, MultipartFile imgpostulante);
+    void guardarimg(Postulante postulante, MultipartFile imgpostulante) throws IOException;
     void eliminarPostulante(long id);
     byte[] getProfileImage(Long id) throws IOException;
 }

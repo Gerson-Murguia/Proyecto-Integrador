@@ -14,7 +14,7 @@ public class ProyectoIntegradorApplication {
      * Prerequisitos:
      * - La cuenta de Azure debe tener una subscripción a Face API(limitada a 20 llamadas por minuto).
      * - Crear un lib folder en el root del proyecto., luego añadir los jars necesarios.
-     * - Descargar el FaceAPI library (ms-azure-cs-faceapi.jar) y añadirlo al lib folder.
+     * - Descargar el FaceAPI library (ms-azure-cs-faceapi-1.0.jar) y añadirlo al lib folder.
      * - Reemplazar el valor de la variable region por la region de la cuenta de Azure.
      * Gerson Aldair Murguia Montes - programador backend
      *

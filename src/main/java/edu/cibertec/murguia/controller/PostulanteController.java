@@ -50,18 +50,18 @@ public class PostulanteController {
 	}
 
 	@PostMapping("/registrar")
-	public ResponseEntity<Postulante> guardarPostulante(@RequestParam("name") String name, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("address") String address, @RequestParam MultipartFile image){
+	public ResponseEntity<Postulante> guardarPostulante(@RequestParam("name") String name, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("phone") String phone, @RequestParam MultipartFile image) throws IOException {
 		
-		Postulante nuevoPostulante=postulanteService.addNuevoPostulante(name, lastName, email, address, null);
+		Postulante nuevoPostulante=postulanteService.addNuevoPostulante(name, lastName, email, phone, null);
 		postulanteService.guardarimg(nuevoPostulante, image);
 		
 		return new ResponseEntity<>(nuevoPostulante,HttpStatus.CREATED);
 	}
 
 	@PostMapping("/editar/{id}")
-	public ResponseEntity<Postulante> editarPostulante (@PathVariable long id , @RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String address, @RequestParam MultipartFile image){
+	public ResponseEntity<Postulante> editarPostulante (@PathVariable long id , @RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String phone, @RequestParam MultipartFile image) throws IOException {
 		
-		Postulante editarPostulante=postulanteService.updatePostulante(id,name, lastName, email, address, null);
+		Postulante editarPostulante=postulanteService.updatePostulante(id,name, lastName, email, phone, null);
 		postulanteService.guardarimg(editarPostulante, image);
 		return new ResponseEntity<>(editarPostulante,HttpStatus.OK);
 	}
@@ -75,8 +75,7 @@ public class PostulanteController {
 	
 	@GetMapping(value = "/image/profile/{id}",produces = IMAGE_JPEG_VALUE)
     public byte[] getProfileImage(@PathVariable("id") Long id) throws IOException {
-        return Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/src/main/resources/static/images/"+id+".jpg"));
+        return postulanteService.getProfileImage(id);
     }
-	
-	
+
 }
