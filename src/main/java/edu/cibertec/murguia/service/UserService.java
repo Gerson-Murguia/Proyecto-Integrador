@@ -2,12 +2,13 @@ package edu.cibertec.murguia.service;
 
 import edu.cibertec.murguia.model.AppUser;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
     //OPERACIONES CRUD
-    AppUser registro(String firstName, String lastName, String username, String email);
+    AppUser registro(String firstName, String lastName, String username, String email) throws MessagingException;
     List<AppUser> getUsers();
     // Por si se necesita agregar un usuario desde dentro de la app
     // AppUser addNewUser(String firstName, String lastName, String username, String email, String role, boolean isNonLocked, boolean isActive, MultipartFile profileImage);

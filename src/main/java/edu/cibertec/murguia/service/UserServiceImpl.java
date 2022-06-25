@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepo;
     private final UserPasswordEncoder userPasswordEncoder;
 
+    private final EmailServiceImpl emailService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user= userRepo.findByUsername(username);
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
     @Override
-    public AppUser registro(String firstName, String lastName, String username, String email) {
+    public AppUser registro(String firstName, String lastName, String username, String email) throws MessagingException {
         //TValidar que el usuario no exista y que el email sea válido
         validateUser(StringUtils.EMPTY, username, email);
         //Datos de usuario
@@ -70,6 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //TODO: Enviar email de confirmacion con javaxmail
         //por el momento imprimir la contraseña en concola
         System.out.println("La contraseña generada es: "+password);
+        emailService.sendNewPasswordEmail(firstName,password,email);
         return userRepo.save(user);
     }
 
