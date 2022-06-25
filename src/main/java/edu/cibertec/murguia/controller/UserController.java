@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class UserController {
    private final AuthenticationManager authenticationManager;
 
    @PostMapping("/registro")
-   public ResponseEntity<AppUser> register(@RequestBody AppUser user) {
+   public ResponseEntity<AppUser> register(@RequestBody AppUser user) throws MessagingException {
       AppUser userRegistro=userService.registro(user.getFirstName(),user.getLastName(),user.getUsername(),user.getEmail());
       return new ResponseEntity<>(userRegistro, HttpStatus.OK);
    }

@@ -3,7 +3,6 @@ package edu.cibertec.murguia.service;
 import edu.cibertec.murguia.model.AppUser;
 
 import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
