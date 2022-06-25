@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //TODO: Enviar email de confirmacion con javaxmail
         //por el momento imprimir la contraseña en concola
         System.out.println("La contraseña generada es: "+password);
-        emailService.sendNewPasswordEmail(firstName,password,email);
+        emailService.sendNewPasswordEmail(firstName,username,password,email);
         return userRepo.save(user);
     }
 

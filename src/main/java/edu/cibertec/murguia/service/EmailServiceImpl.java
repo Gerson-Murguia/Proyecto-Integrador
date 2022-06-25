@@ -24,8 +24,8 @@ public class EmailServiceImpl {
     private String byPassword;
 
     @Async
-    public void sendNewPasswordEmail(String firstName, String password, String email) throws MessagingException {
-        Message message = createEmail(firstName, password, email);
+    public void sendNewPasswordEmail(String firstName,String username,String password, String email) throws MessagingException {
+        Message message = createEmail(firstName,username, password, email);
         SMTPTransport smtpTransport = (SMTPTransport) getEmailSession().getTransport(SIMPLE_MAIL_TRANSFER_PROTOCOL);
         smtpTransport.connect(GMAIL_SMTP_SERVER, byUsername, byPassword);
         smtpTransport.sendMessage(message, message.getAllRecipients());
@@ -42,7 +42,7 @@ public class EmailServiceImpl {
         return Session.getInstance(properties, null);
     }
 
-    private Message createEmail(String firstName, String password, String email) throws MessagingException {
+    private Message createEmail(String firstName,String username, String password, String email) throws MessagingException {
         Message message = new MimeMessage(getEmailSession());
         message.setFrom(new InternetAddress(FROM_EMAIL));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
@@ -51,7 +51,7 @@ public class EmailServiceImpl {
         message.setSubject(EMAIL_SUBJECT);
         message.setSentDate(new Date());
         message.saveChanges();
-        message.setText("Hola " + firstName + ", \n\n La nueva clave es: " + password + "\n\n Equipo de Soporte - Verificacion Facial \n\n "+ "No guardamos tu clave, ni la compartimos con nadie, por tu seguridad");
+        message.setText("Hola " + firstName + ", \n\n Tus credenciales son:\n\n Usuario: "+username+" \n\nClave: " + password + "\n\n Equipo de Soporte - Verificacion Facial \n\n "+ "Por tu seguridad no guardamos tus credenciales ni las compartimos con nadie.");
         return message;
     }
 }
