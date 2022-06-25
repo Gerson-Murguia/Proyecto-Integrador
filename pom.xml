@@ -18,6 +18,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    <repositories>
+        <!--other repositories if any-->
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/libs</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,9 +46,14 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
+      <!--  <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -53,11 +66,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>tech.murguia.cognitiveservices</groupId>
-            <artifactId>example-app</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/java/edu/cibertec/murguia/lib/ms-azure-cs-faceapi.jar</systemPath>
+            <groupId>cognitiveservices</groupId>
+            <artifactId>faceapi</artifactId>
+            <version>1</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
