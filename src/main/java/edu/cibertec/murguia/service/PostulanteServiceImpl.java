@@ -68,14 +68,16 @@ public class PostulanteServiceImpl implements PostulanteService {
         System.out.println("User folder: " + System.getProperty("user.home"));
         if(!imgpostulante.isEmpty()) {
             if (!Arrays.asList(IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE,IMAGE_GIF_VALUE).contains(imgpostulante.getContentType())){
-                log.info(imgpostulante.getOriginalFilename()+"no es una imagen con formato aceptado. Por favor, suba una imagen");
+                log.info(imgpostulante.getOriginalFilename()+"no es una imagen con formato aceptado. Por favor, suba una imagen en formato jpg");
             }
             //System.getProperty("user.home")+"/verificacion/postulante/
             Path userFolder = Paths.get(USER_FOLDER).toAbsolutePath().normalize();
             if (!Files.exists(userFolder)){
-                Files.createDirectories(userFolder);
+                var file=Files.createDirectories(userFolder);
                 //System.getProperty("user.home")+"/verificacion/postulante/
-                log.info("Directorio creado:"+userFolder);
+                log.info("Directorio creado:"+file.toString());
+            }else{
+                log.info("Directorio existente:"+userFolder.toString());
             }
             //System.getProperty("user.home")+"/verificacion/postulante/1.jpg"
             Files.deleteIfExists(Paths.get(userFolder+postulante.getId().toString()+".jpg"));
@@ -88,6 +90,9 @@ public class PostulanteServiceImpl implements PostulanteService {
 
     private String setProfileImageUrl(Long id) {
         // /verificacion/postulante/1.jpg
+        System.out.println("Set profile image url: "+ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(IMAGE_BASE_URL+id+".jpg")
+                .toUriString());
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(IMAGE_BASE_URL+id+".jpg")
                 .toUriString();
@@ -95,7 +100,7 @@ public class PostulanteServiceImpl implements PostulanteService {
 
     @Override
     public byte[] getProfileImage(Long id) throws IOException {
-        System.out.println("Get profile image: "+Paths.get(Paths.get(System.getProperty("user.home")).toAbsolutePath().normalize()+"/"+id+".jpg"));
+        System.out.println("Get profile image: "+Paths.get(System.getProperty("user.home")).toAbsolutePath().normalize()+"/"+id+".jpg");
         ///verificacion/postulante/1.jpg
         return Files.readAllBytes(Paths.get(USER_FOLDER+id+".jpg"));
     }
