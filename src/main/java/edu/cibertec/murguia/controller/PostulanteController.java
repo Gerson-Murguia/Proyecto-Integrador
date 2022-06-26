@@ -44,7 +44,7 @@ public class PostulanteController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Postulante> getPostulante(@PathVariable Long id){
 		Postulante postulante = postulanteService.getPostulante(id);
-		return new ResponseEntity<>(postulante, HttpStatus.FOUND);
+		return new ResponseEntity<>(postulante, HttpStatus.OK);
 	}
 
 	@PostMapping("/registrar")
