@@ -70,13 +70,16 @@ public class PostulanteServiceImpl implements PostulanteService {
             if (!Arrays.asList(IMAGE_JPEG_VALUE,IMAGE_PNG_VALUE,IMAGE_GIF_VALUE).contains(imgpostulante.getContentType())){
                 log.info(imgpostulante.getOriginalFilename()+"no es una imagen con formato aceptado. Por favor, suba una imagen");
             }
-            Path userFolder = Paths.get(USER_FOLDER+postulante.getId()).toAbsolutePath().normalize();
+            //System.getProperty("user.home")+"/verificacion/postulante/
+            Path userFolder = Paths.get(USER_FOLDER).toAbsolutePath().normalize();
             if (!Files.exists(userFolder)){
                 Files.createDirectories(userFolder);
+                //System.getProperty("user.home")+"/verificacion/postulante/
                 log.info("Directorio creado:"+userFolder);
             }
-
-            Files.deleteIfExists(Paths.get(userFolder+"/verificacion/postulante/"+postulante.getId()+".jpg"));
+            //System.getProperty("user.home")+"/verificacion/postulante/1.jpg"
+            Files.deleteIfExists(Paths.get(userFolder+postulante.getId().toString()+".jpg"));
+            //System.getProperty("user.home")+"/verificacion/postulante/1.jpg"
             Files.copy(imgpostulante.getInputStream(),userFolder.resolve(postulante.getId()+".jpg"),REPLACE_EXISTING);
             postulante.setImageUrl(setProfileImageUrl(postulante.getId()));
             studentRepo.save(postulante);
@@ -84,6 +87,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     private String setProfileImageUrl(Long id) {
+        // /verificacion/postulante/1.jpg
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(IMAGE_BASE_URL+id+".jpg")
                 .toUriString();
@@ -92,6 +96,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     @Override
     public byte[] getProfileImage(Long id) throws IOException {
         System.out.println("Get profile image: "+Paths.get(Paths.get(System.getProperty("user.home")).toAbsolutePath().normalize()+"/"+id+".jpg"));
+        ///verificacion/postulante/1.jpg
         return Files.readAllBytes(Paths.get(USER_FOLDER+id+".jpg"));
     }
 }

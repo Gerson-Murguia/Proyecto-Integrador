@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
