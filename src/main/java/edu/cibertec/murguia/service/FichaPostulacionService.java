@@ -6,7 +6,7 @@ import edu.cibertec.murguia.model.FichaPostulacion;
 import java.util.List;
 
 public interface FichaPostulacionService {
-    List<FichaPostulacion> getFichasPostulacion();
+    List<FichaPostulacionDTO> getFichasPostulacion();
     FichaPostulacion getFichaPostulacion(Long id);
     FichaPostulacion registrarFichaPostulacion(FichaPostulacionDTO fichaPostulacionDTO);
     FichaPostulacion actualizarFichaPostulacion(Long idFicha,FichaPostulacionDTO fichaPostulacionDTO);

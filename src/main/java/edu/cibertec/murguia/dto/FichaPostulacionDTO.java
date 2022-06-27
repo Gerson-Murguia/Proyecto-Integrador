@@ -15,9 +15,13 @@ public class FichaPostulacionDTO {
     private String estado;
 
     private Long idModalidad;
+    private String nombreModalidad;
     private Long idAdmision;
+    private String nombreAdmision;
     private Long idPostulante;
+    private String nombrePostulante;
     private Long idCarrera;
+    private String nombreCarrera;
     private String fechaRegistro;
 
 }

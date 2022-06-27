@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,9 +25,16 @@ public class FichaPostulanteServiceImpl implements FichaPostulacionService {
     private final CarreraRepository carreraRepo;
 
     @Override
-    public List<FichaPostulacion> getFichasPostulacion() {
+    public List<FichaPostulacionDTO> getFichasPostulacion() {
+        //find all and return as FichaPostulacionDTO List
+        List<FichaPostulacionDTO> fichas=fichaPostulacionRepo.findAll().stream()
+                .map(x->new FichaPostulacionDTO(x.getId(), x.getMonto(), x.getNroPago(), x.getEstado(),
+                        x.getModalidad().getId(), x.getModalidad().getDescripcion(), x.getAdmision().getId(),
+                        x.getAdmision().getDescripcion(), x.getPostulante().getId(), x.getPostulante().getName()+" "+x.getPostulante().getLastName(),
+                        x.getCarrera().getId(), x.getCarrera().getDescripcion(), x.getFechaRegistro()))
+                .collect(Collectors.toList());
 
-        return fichaPostulacionRepo.findAll();
+        return fichas;
     }
 
     @Override
