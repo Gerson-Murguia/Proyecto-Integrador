@@ -38,7 +38,7 @@ public class FichaController {
     @PostMapping("/registrar")
     public ResponseEntity<FichaPostulacion> registrarFichaPostulacion(@RequestBody FichaPostulacionDTO fichaPostulacionDTO){
         FichaPostulacion fichaPostulacion = fichaPostulacionService.registrarFichaPostulacion(fichaPostulacionDTO);
-        return new ResponseEntity<>(fichaPostulacion, HttpStatus.CREATED);
+        return new ResponseEntity<>(fichaPostulacion, HttpStatus.OK);
     }
     @PutMapping("/actualizar/{idFicha}")
     public ResponseEntity<FichaPostulacion> actualizarFichaPostulacion(@PathVariable Long idFicha,@RequestBody FichaPostulacionDTO fichaPostulacionDTO){
