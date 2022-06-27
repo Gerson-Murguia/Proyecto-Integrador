@@ -19,9 +19,9 @@ public class FichaController {
     private final FichaPostulacionService fichaPostulacionService;
 
     @GetMapping("/listado")
-    public ResponseEntity<List<FichaPostulacion>> ListarFichaPostulacion(){
+    public ResponseEntity<List<FichaPostulacionDTO>> ListarFichaPostulacion(){
 
-        List<FichaPostulacion> fichaPostulacion = fichaPostulacionService.getFichasPostulacion();
+        List<FichaPostulacionDTO> fichaPostulacion = fichaPostulacionService.getFichasPostulacion();
         if (!fichaPostulacion.isEmpty()) {
             return new ResponseEntity<>(fichaPostulacion, HttpStatus.OK);
         } else {
