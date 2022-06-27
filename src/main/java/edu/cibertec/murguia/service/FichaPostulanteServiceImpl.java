@@ -45,10 +45,10 @@ public class FichaPostulanteServiceImpl implements FichaPostulacionService {
         fichaPostulacion.setMonto(fichaPostulacionDTO.getMonto());
         fichaPostulacion.setEstado(fichaPostulacionDTO.getEstado());
         fichaPostulacion.setFechaRegistro(LocalDate.now().toString());
-        fichaPostulacion.setPostulante(postulanteRepo.getById(fichaPostulacionDTO.getIdPostulante()));
-        fichaPostulacion.setAdmision(admisionRepo.getById(fichaPostulacionDTO.getIdAdmision()));
-        fichaPostulacion.setModalidad(modalidadRepo.getById(fichaPostulacionDTO.getIdModalidad()));
-        fichaPostulacion.setCarrera(carreraRepo.getById(fichaPostulacionDTO.getIdCarrera()));
+        fichaPostulacion.setPostulante(postulanteRepo.findById(fichaPostulacionDTO.getIdPostulante()).get());
+        fichaPostulacion.setAdmision(admisionRepo.findById(fichaPostulacionDTO.getIdAdmision()).get());
+        fichaPostulacion.setModalidad(modalidadRepo.findById(fichaPostulacionDTO.getIdModalidad()).get());
+        fichaPostulacion.setCarrera(carreraRepo.findById(fichaPostulacionDTO.getIdCarrera()).get());
 
         return fichaPostulacionRepo.save(fichaPostulacion);
     }
