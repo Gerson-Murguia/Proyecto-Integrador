@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class FichaController {
 
-    FichaPostulacionService fichaPostulacionService;
+    private final FichaPostulacionService fichaPostulacionService;
 
     @GetMapping("/listado")
     public ResponseEntity<List<FichaPostulacion>> ListarFichaPostulacion(){
