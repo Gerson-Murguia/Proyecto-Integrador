@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -20,21 +22,25 @@ public class FichaPostulacion {
     private String nroPago;
     private String estado;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = true)
+    @OneToOne(optional = true)
     @JoinColumn(name="id_modalidad")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Modalidad modalidad;
-    @OneToOne(cascade = CascadeType.ALL,optional = true)
+    @OneToOne(optional = true)
     @JsonIgnore
     @JoinColumn(name="id_admision")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Admision admision;
     //Muchas FichaPostulacion pueden pertenecer a un solo Postulante
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name="id_postulante",nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Postulante postulante;
-    @OneToOne(cascade = CascadeType.ALL,optional = true)
+    @OneToOne(optional = true)
     @JoinColumn(name="id_carrera")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Carrera carrera;
     //cambiar luego por localDate
